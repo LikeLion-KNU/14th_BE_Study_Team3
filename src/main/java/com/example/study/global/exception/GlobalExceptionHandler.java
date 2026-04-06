@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
         ErrorCode code = ex.getErrorCode();
         ErrorResponse body = ErrorResponse.of(code, ex.getMessage(), Collections.emptyList(),
                 path(req));
-        return ResponseEntity.status(code.status).body(body);
+        return ResponseEntity.status(code.getStatus()).body(body);
     }
 
     // DTO 검증 실패 (@Valid)
@@ -35,29 +35,30 @@ public class GlobalExceptionHandler {
                 .map(GlobalExceptionHandler::formatFieldError)
                 .collect(Collectors.toList());
 
-        ErrorCode code = ErrorCode.INVALID_INPUT;
-        ErrorResponse body = ErrorResponse.of(code, code.message, errors, path(req));
-        return ResponseEntity.status(code.status).body(body);
+        ErrorCode code = CommonErrorCode.INVALID_INPUT;
+
+        ErrorResponse body = ErrorResponse.of(code, code.getMessage(), errors, path(req));
+        return ResponseEntity.status(code.getStatus()).body(body);
     }
 
     // JSON 파싱 에러
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<ErrorResponse> handleNotReadable(HttpMessageNotReadableException ex,
                                                               WebRequest req) {
-        ErrorCode code = ErrorCode.JSON_PARSE_ERROR;
-        ErrorResponse body = ErrorResponse.of(code, code.message, Collections.emptyList(),
+        ErrorCode code = CommonErrorCode.JSON_PARSE_ERROR;
+        ErrorResponse body = ErrorResponse.of(code, code.getMessage(), Collections.emptyList(),
                 path(req));
-        return ResponseEntity.status(code.status).body(body);
+        return ResponseEntity.status(code.getStatus()).body(body);
     }
 
     // DB 무결성 위반
     @ExceptionHandler(DataIntegrityViolationException.class)
     public ResponseEntity<ErrorResponse> handleDataIntegrity(DataIntegrityViolationException ex,
                                                                 WebRequest req) {
-        ErrorCode code = ErrorCode.DUPLICATE_RESOURCE;
-        ErrorResponse body = ErrorResponse.of(code, code.message, Collections.emptyList(),
+        ErrorCode code = CommonErrorCode.DUPLICATE_RESOURCE;
+        ErrorResponse body = ErrorResponse.of(code, code.getMessage(), Collections.emptyList(),
                 path(req));
-        return ResponseEntity.status(code.status).body(body);
+        return ResponseEntity.status(code.getStatus()).body(body);
     }
 
     // 마지막 안전망
@@ -68,10 +69,10 @@ public class GlobalExceptionHandler {
         String path = description.replace("uri=", "");
         log.error("Internal error at {}: {}", path, ex.getMessage(), ex);
 
-        ErrorCode code = ErrorCode.INTERNAL_ERROR;
-        ErrorResponse body = ErrorResponse.of(code, code.message, Collections.emptyList(),
+        ErrorCode code = CommonErrorCode.INTERNAL_ERROR;
+        ErrorResponse body = ErrorResponse.of(code, code.getMessage(), Collections.emptyList(),
                 path(req));
-        return ResponseEntity.status(code.status).body(body);
+        return ResponseEntity.status(code.getStatus()).body(body);
     }
 
     private static String formatFieldError(FieldError fe) {

@@ -12,8 +12,8 @@ public record ErrorResponse(
 ) {
     public static ErrorResponse of (ErrorCode code, String message, List<String> errors, String path) {
         return new ErrorResponse(
-                code.code,
-                message != null ? message : code.message,
+                code.getCode(),
+                message != null ? message : code.getMessage(),
                 errors,
                 LocalDateTime.now(),
                 path
