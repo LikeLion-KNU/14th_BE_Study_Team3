@@ -56,8 +56,6 @@ public class UserController {
         @PathVariable long id,
         @Valid @RequestBody ModifyUserRequestDto modifyUserRequestDto
     ) {
-        System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            System.out.println(modifyUserRequestDto.changedName());
         if (modifyUserRequestDto.changedName() == null) {
             throw new BusinessException(UserDomainErrorCode.NOT_VALID_REQUEST_BODY);
         }
