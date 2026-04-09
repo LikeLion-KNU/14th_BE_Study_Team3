@@ -14,14 +14,12 @@ import com.example.study.domain.user.exception.UserDomainErrorCode;
 import com.example.study.global.exception.BusinessException;
 
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@RequiredArgsConstructor
 public class UserService {
-    private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
+    private final UserRepository userRepository;
 
     public GetAllUserResponseDto getAllUser() {
         final List<User> allUser = this.userRepository.findAll();

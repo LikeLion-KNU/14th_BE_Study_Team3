@@ -16,6 +16,7 @@ import com.example.study.domain.user.exception.UserDomainErrorCode;
 import com.example.study.global.exception.BusinessException;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,12 +24,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
+@RequiredArgsConstructor
 public class UserController {
-    private UserService userService;
-    
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    private final UserService userService;
     
     @GetMapping("/api/users")
     public ResponseEntity<GetAllUserResponseDto> getAllUser() {
