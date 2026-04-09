@@ -1,6 +1,5 @@
 package com.example.study.domain.user;
 
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,21 +33,21 @@ public class UserController {
     public ResponseEntity<GetAllUserResponseDto> getAllUser() {
         final GetAllUserResponseDto result = this.userService.getAllUser();
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<GetUserResponseDto> getUserById(@PathVariable long id) {
         final GetUserResponseDto result = this.userService.getUserById(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping()
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequestDto createUserRequestDto) {
         this.userService.createUser(createUserRequestDto);
         
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.ok(null);
     }
     
     @PatchMapping("/{id}")
@@ -62,13 +61,13 @@ public class UserController {
 
         final ModifyUserResponseDto result = this.userService.modifyUserById(id, modifyUserRequestDto);
 
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable long id) {
         this.userService.deleteUserbyId(id);
 
-        return ResponseEntity.status(HttpStatus.OK).body(null);
+        return ResponseEntity.ok(null);
     }
 }
