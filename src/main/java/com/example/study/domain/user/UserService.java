@@ -45,7 +45,9 @@ public class UserService {
 
     public void createUser(CreateUserRequestDto createUserRequestDto) {
         final String newUserName = createUserRequestDto.name();
-        final User newUser = new User(newUserName);
+        final User newUser = User.builder()
+            .name(newUserName)
+            .build();
         
         this.userRepository.save(newUser);
 
@@ -59,7 +61,7 @@ public class UserService {
         
         final String changedName = modifyUserRequestDto.changedName();
         if (changedName != null) {
-            targetUser.setName(changedName);
+            targetUser.updateName(changedName);
         }
         
         this.userRepository.save(targetUser);
