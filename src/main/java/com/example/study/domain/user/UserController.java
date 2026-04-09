@@ -1,5 +1,7 @@
 package com.example.study.domain.user;
 
+import java.net.URI;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -45,9 +47,9 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequestDto createUserRequestDto) {
-        this.userService.createUser(createUserRequestDto);
+        final long newUserId = this.userService.createUser(createUserRequestDto);
         
-        return ResponseEntity.ok(null);
+        return ResponseEntity.created(URI.create("/api/users/" + newUserId)).build();
     }
     
     @PatchMapping("/{id}")
@@ -68,6 +70,6 @@ public class UserController {
     public ResponseEntity<Void> deleteUserById(@PathVariable long id) {
         this.userService.deleteUserbyId(id);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.noContent().build();
     }
 }

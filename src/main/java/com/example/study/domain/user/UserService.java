@@ -41,7 +41,7 @@ public class UserService {
         return new GetUserResponseDto(userInfo);
     }
 
-    public void createUser(CreateUserRequestDto createUserRequestDto) {
+    public long createUser(CreateUserRequestDto createUserRequestDto) {
         final String newUserName = createUserRequestDto.name();
         final User newUser = User.builder()
             .name(newUserName)
@@ -49,7 +49,7 @@ public class UserService {
         
         this.userRepository.save(newUser);
 
-        return;
+        return newUser.getId();
     }
 
     @Transactional
