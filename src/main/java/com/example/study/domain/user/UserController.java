@@ -20,36 +20,38 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
     
-    @GetMapping("/api/users")
+    @GetMapping()
     public ResponseEntity<GetAllUserResponseDto> getAllUser() {
         final GetAllUserResponseDto result = this.userService.getAllUser();
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @GetMapping("/api/users/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<GetUserResponseDto> getUserById(@PathVariable long id) {
         final GetUserResponseDto result = this.userService.getUserById(id);
 
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @PostMapping("/api/users")
+    @PostMapping()
     public ResponseEntity<Void> createUser(@Valid @RequestBody CreateUserRequestDto createUserRequestDto) {
         this.userService.createUser(createUserRequestDto);
         
         return ResponseEntity.status(HttpStatus.OK).body(null);
     }
     
-    @PatchMapping("/api/users/{id}")
+    @PatchMapping("/{id}")
     public ResponseEntity<ModifyUserResponseDto> modifyUserById(
         @PathVariable long id,
         @Valid @RequestBody ModifyUserRequestDto modifyUserRequestDto
@@ -63,7 +65,7 @@ public class UserController {
         return ResponseEntity.status(HttpStatus.OK).body(result);
     }
 
-    @DeleteMapping("/api/users/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteUserById(@PathVariable long id) {
         this.userService.deleteUserbyId(id);
 
