@@ -3,6 +3,7 @@ package com.example.study.domain.user;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.study.domain.user.dto.common.UserInfo;
 import com.example.study.domain.user.dto.request.CreateUserRequestDto;
@@ -13,7 +14,6 @@ import com.example.study.domain.user.dto.response.ModifyUserResponseDto;
 import com.example.study.domain.user.exception.UserDomainErrorCode;
 import com.example.study.global.exception.BusinessException;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -21,6 +21,7 @@ import lombok.RequiredArgsConstructor;
 public class UserService {
     private final UserRepository userRepository;
 
+    @Transactional(readOnly = true)
     public GetAllUserResponseDto getAllUser() {
         final List<User> allUser = this.userRepository.findAll();
         
@@ -32,6 +33,7 @@ public class UserService {
         return new GetAllUserResponseDto(userInfos);
     }
 
+    @Transactional(readOnly = true)
     public GetUserResponseDto getUserById(long id) {
         final User user = this.userRepository.findById(id)
             .orElseThrow(() -> new BusinessException(UserDomainErrorCode.NOT_FOUND_USER));
@@ -41,6 +43,7 @@ public class UserService {
         return new GetUserResponseDto(userInfo);
     }
 
+    @Transactional
     public long createUser(CreateUserRequestDto createUserRequestDto) {
         final String newUserName = createUserRequestDto.name();
         final User newUser = User.builder()
@@ -67,6 +70,7 @@ public class UserService {
         return new ModifyUserResponseDto(UserInfo.from(targetUser));
     }
 
+    @Transactional
     public void deleteUserbyId(long id) {
         this.userRepository.findById(id)
             .orElseThrow(() -> new BusinessException(UserDomainErrorCode.NOT_FOUND_USER));
