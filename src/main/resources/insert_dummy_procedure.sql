@@ -12,16 +12,12 @@ DELIMITER $$
 CREATE PROCEDURE InsertDummyUsers()
 BEGIN
     DECLARE i INT DEFAULT 1;
-    SET autocommit = 0; -- 성능 최적화의 핵심
+    SET autocommit = 0;
 
     WHILE i <= 30000 DO
-        INSERT INTO user (name, email)
-        VALUES (
-            CONCAT('User_', i),
-            CONCAT('user', i, '@knu.ac.kr')
-        );
+        INSERT INTO user (name)
+        VALUES (CONCAT('User_', i));
         SET i = i + 1;
-
 END WHILE;
 
 COMMIT;
