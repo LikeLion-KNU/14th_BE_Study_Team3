@@ -11,7 +11,7 @@ import com.example.study.domain.enrollment.entity.Enrollment;
 import com.example.study.domain.enrollment.exception.EnrollmentErrorCode;
 import com.example.study.domain.enrollment.repository.EnrollmentRepository;
 import com.example.study.domain.user.User;
-import com.example.study.domain.user.UserRepository;
+import com.example.study.domain.user.repository.UserRepository;
 import com.example.study.domain.user.exception.UserDomainErrorCode;
 import com.example.study.global.exception.BusinessException;
 import com.example.study.global.exception.CommonErrorCode;
