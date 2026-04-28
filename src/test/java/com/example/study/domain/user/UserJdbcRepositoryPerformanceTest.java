@@ -3,7 +3,6 @@ package com.example.study.domain.user;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.TestInfo;
@@ -23,11 +22,6 @@ public class UserJdbcRepositoryPerformanceTest {
     private UserJdbcRepository userJdbcRepository;
     
     private final StopWatch stopWatch = new StopWatch();
-    
-    @BeforeEach
-    static void beforeEach() {
-        System.out.println("----- start test to user jdbc repository performance -----");
-    }
 
     @RepeatedTest(value = 20)
     @DisplayName("Measuring the time taken to perform a batch insert of 30000 sample user records")
