@@ -4,28 +4,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.RepeatedTest;
-import org.junit.jupiter.api.TestInfo;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
-import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
-import org.springframework.context.annotation.Import;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.StopWatch;
 
 import com.example.study.domain.user.repository.UserJdbcRepository;
 
-@DataJpaTest(showSql = true)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(UserJdbcRepository.class)
+import jakarta.transaction.Transactional;
+
+@SpringBootTest
 public class UserJdbcRepositoryPerformanceTest {
     @Autowired
     private UserJdbcRepository userJdbcRepository;
     
     private final StopWatch stopWatch = new StopWatch();
 
-    @RepeatedTest(value = 20)
+    @Test
     @DisplayName("Measuring the time taken to perform a batch insert of 30000 sample user records")
-    void testExcutionTimeWhenBatchInsertUserDummyData(TestInfo testInfo) {
+    @Transactional
+    void testExcutionTimeWhenBatchInsertUserDummyData() {
         // Given
         List<User> userList = new ArrayList<User>();
         for (int i = 1; i <= 30000; i++) {
@@ -38,6 +36,6 @@ public class UserJdbcRepositoryPerformanceTest {
         stopWatch.stop();
 
         // Than
-        System.out.println("batch insert of 30000 sample user records(" + testInfo.getDisplayName() + ")" + " : " + stopWatch.getTotalTimeMillis() + " MS");
+        System.out.println("batch insert of 30000 sample user records : " + stopWatch.getTotalTimeSeconds() + " seconds");
     }
 }

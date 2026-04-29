@@ -5,28 +5,31 @@ import java.util.List;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.data.jpa.test.autoconfigure.DataJpaTest;
 import org.springframework.boot.jdbc.test.autoconfigure.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.util.StopWatch;
 
 import com.example.study.domain.course.entity.Course;
 import com.example.study.domain.course.repository.CourseJdbcRepository;
 
-@DataJpaTest(showSql = true)
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@Import(CourseJdbcRepository.class)
+import jakarta.transaction.Transactional;
+
+@SpringBootTest
 class CourseJdbcRepositoryPerformanceTest {
     @Autowired
     private CourseJdbcRepository courseJdbcRepository;
     
     private final StopWatch stopWatch = new StopWatch();
 
-    @RepeatedTest(value = 20)
+    @Test()
     @DisplayName("Measuring the time taken to perform a batch insert of 5000 sample course records")
-    void testExcutionTimeWhenBatchInsertCourseDummyData(TestInfo testInfo) {
+    @Transactional
+    void testExcutionTimeWhenBatchInsertCourseDummyData() {
         // Given
         List<Course> courseList = new ArrayList<Course>();
         for (int i = 0; i < 5000; i++) {
@@ -44,7 +47,7 @@ class CourseJdbcRepositoryPerformanceTest {
         stopWatch.stop();
 
         // Than
-        System.out.println("batch insert of 5000 sample course records(" + testInfo.getDisplayName() + ")" + " : " + stopWatch.getTotalTimeMillis() + " MS");
+        System.out.println("batch insert of 5000 sample course records : " + stopWatch.getTotalTimeSeconds() + " seconds");
     }
 
 }
