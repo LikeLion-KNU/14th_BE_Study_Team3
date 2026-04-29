@@ -35,10 +35,11 @@ class CourseJdbcRepositoryPerformanceTest {
                 .build()
             );
         }
+        int batchSize = 1000;
 
         // When
         stopWatch.start();
-        courseJdbcRepository.batchInsert(courseList);
+        courseJdbcRepository.batchInsert(courseList, batchSize);
         stopWatch.stop();
 
         // Than

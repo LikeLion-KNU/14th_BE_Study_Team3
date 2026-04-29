@@ -15,12 +15,12 @@ import lombok.RequiredArgsConstructor;
 public class UserJdbcRepository {
     private final JdbcTemplate jdbcTemplate;
 
-    public void batchInsert(List<User> userList) {
+    public void batchInsert(List<User> userList, int batchSize) {
         String sql = "INSERT INTO user (name) " + "VALUES (?)";
 
         jdbcTemplate.batchUpdate(sql, 
             userList, 
-            userList.size(), 
+            batchSize,
             (PreparedStatement ps, User user) -> {
                 ps.setString(1, user.getName());
             });

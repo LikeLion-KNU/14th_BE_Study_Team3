@@ -29,10 +29,11 @@ public class UserJdbcRepositoryPerformanceTest {
         for (int i = 1; i <= 30000; i++) {
             userList.add(User.builder().name("user" + i).build());
         }
+        int batchSize = 1000;
 
         // When
         stopWatch.start();
-        userJdbcRepository.batchInsert(userList);
+        userJdbcRepository.batchInsert(userList, batchSize);
         stopWatch.stop();
 
         // Than
