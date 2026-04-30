@@ -9,7 +9,7 @@ import com.example.study.domain.enrollment.entity.Enrollment;
 import com.example.study.domain.enrollment.repository.EnrollmentRepository;
 import com.example.study.domain.enrollment.service.EnrollmentServiceImpl;
 import com.example.study.domain.user.User;
-import com.example.study.domain.user.UserRepository;
+import com.example.study.domain.user.repository.UserRepository;
 import com.example.study.global.exception.BusinessException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

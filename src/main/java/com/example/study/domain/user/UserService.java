@@ -12,6 +12,7 @@ import com.example.study.domain.user.dto.response.GetAllUserResponseDto;
 import com.example.study.domain.user.dto.response.GetUserResponseDto;
 import com.example.study.domain.user.dto.response.ModifyUserResponseDto;
 import com.example.study.domain.user.exception.UserDomainErrorCode;
+import com.example.study.domain.user.repository.UserRepository;
 import com.example.study.global.exception.BusinessException;
 
 import lombok.RequiredArgsConstructor;
