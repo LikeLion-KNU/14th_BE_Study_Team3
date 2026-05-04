@@ -20,7 +20,7 @@ import java.lang.reflect.Method;
 @Aspect
 @Component
 @RequiredArgsConstructor
-public class DistributedLockAspect {
+public class DistributedLockAop {
 
     private static final String REDISSON_LOCK_PREFIX = "LOCK:";
 
