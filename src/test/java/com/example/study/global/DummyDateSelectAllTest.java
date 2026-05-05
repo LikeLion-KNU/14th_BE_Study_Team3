@@ -3,7 +3,7 @@ package com.example.study.global;
 import com.example.study.domain.course.entity.Course;
 import com.example.study.domain.course.repository.CourseRepository;
 import com.example.study.domain.user.User;
-import com.example.study.domain.user.UserRepository;
+import com.example.study.domain.user.repository.UserRepository;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
