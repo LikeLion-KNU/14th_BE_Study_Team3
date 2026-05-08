@@ -18,6 +18,9 @@ public class Course {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Version
+    private Long version;
+
     @Column(length = 64, nullable = false)
     private String name;
 
