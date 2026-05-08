@@ -5,6 +5,7 @@ import com.example.study.domain.enrollment.dto.response.EnrollmentListResponseDt
 import com.example.study.domain.enrollment.dto.response.EnrollmentPageResponseDto;
 import com.example.study.domain.enrollment.dto.response.EnrollmentResponseDto;
 import com.example.study.domain.enrollment.service.EnrollmentService;
+import com.example.study.domain.enrollment.service.facade.DistributedLockFacade;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -21,12 +22,22 @@ public class EnrollmentController {
 
     private final EnrollmentService enrollmentService;
 
+    // redis 분산 락 적용
+    private final DistributedLockFacade distributedLockFacade;
+
     @PostMapping("/enrollments")
     public ResponseEntity<EnrollmentResponseDto> createEnrollment(
             @RequestBody @Valid EnrollmentRequestDto request) {
 
         EnrollmentResponseDto response = enrollmentService.createEnrollment(request);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    }
+
+    @PostMapping("/enrollments/distributed")
+    public ResponseEntity<EnrollmentResponseDto> enrollWithDistributedLock(
+            @RequestBody EnrollmentRequestDto requestDto) {
+
+        return ResponseEntity.ok(distributedLockFacade.createEnrollment(requestDto));
     }
 
     @GetMapping("/enrollments")

@@ -12,7 +12,11 @@ public enum CommonErrorCode implements ErrorCode{
     INVALID_INPUT(HttpStatus.BAD_REQUEST, "INVALID_INPUT", "요청 값이 올바르지 않습니다."),
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "INTERNAL_ERROR", "일시적인 오류가 발생했습니다."),
     JSON_PARSE_ERROR(HttpStatus.BAD_REQUEST, "JSON_PARSE_ERROR", "요청 본문을 해석할 수 없습니다."),
-    DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "DUPLICATE_RESOURCE", "이미 존재하는 데이터입니다.");
+    DUPLICATE_RESOURCE(HttpStatus.CONFLICT, "DUPLICATE_RESOURCE", "이미 존재하는 데이터입니다."),
+
+    // 분산 락 관련 에러 코드 추가
+    LOCK_ACQUISITION_FAILED(HttpStatus.CONFLICT, "LOCK_ACQUISITION_FAILED", "현재 처리 중인 요청이 많습니다. 잠시 후 다시 시도해주세요."),
+    LOCK_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "LOCK_INTERRUPTED", "요청 처리 중 인터럽트가 발생했습니다.");
 
     private final HttpStatus status;
     private final String code;
