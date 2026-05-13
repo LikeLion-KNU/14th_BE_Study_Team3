@@ -35,6 +35,7 @@ dependencies {
 
 	// Redis & Redisson
 	implementation 'org.redisson:redisson-spring-boot-starter:3.30.0'
+	testImplementation 'com.github.ben-manes.caffeine:caffeine'
 }
 
 tasks.named('test') {
