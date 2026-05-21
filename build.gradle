@@ -40,6 +40,13 @@ dependencies {
 	implementation 'org.redisson:redisson-spring-boot-starter:3.30.0'
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	testImplementation 'com.github.ben-manes.caffeine:caffeine'
+
+
+
+    testCompileOnly 'org.projectlombok:lombok'
+    testAnnotationProcessor 'org.projectlombok:lombok'
+
+
 }
 
 tasks.named('test') {
