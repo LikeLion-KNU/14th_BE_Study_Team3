@@ -33,8 +33,13 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
 	// Redis & Redisson
 	implementation 'org.redisson:redisson-spring-boot-starter:3.30.0'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+	testImplementation 'com.github.ben-manes.caffeine:caffeine'
 }
 
 tasks.named('test') {
