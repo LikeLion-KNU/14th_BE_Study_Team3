@@ -9,6 +9,8 @@ import com.example.study.domain.course.exception.CourseErrorCode;
 import com.example.study.domain.course.repository.CourseRepository;
 import com.example.study.global.exception.BusinessException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +27,7 @@ public class CourseServiceImpl implements CourseService {
     private final CourseRepository courseRepository;
 
     @Transactional
+    @CacheEvict(value = "courses", allEntries = true)
     @Override
     public CourseResponseDto createCourse(CourseCreateRequestDto request) {
         Course course = Course.builder()
@@ -37,6 +40,9 @@ public class CourseServiceImpl implements CourseService {
         return CourseResponseDto.from(savedCourse);
     }
 
+    @Cacheable(value = "courses", key = "#pageable.pageNumber")
+    // 캐시 이름: "courses", 키: 페이지 번호 → "courses::0", "courses::1" 형태로 Redis에 저장
+    // 같은 페이지 번호로 요청이 오면 DB 조회 없이 Redis에서 바로 반환
     @Override
     public CoursePageResponseDto findAllCourses(Pageable pageable) {
         Page<Course> coursePage = courseRepository.findAll(pageable);
@@ -62,6 +68,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Transactional
+    @CacheEvict(value = "courses", allEntries = true)
     @Override
     public CourseResponseDto updateCourse(Long id, CourseUpdateRequestDto request) {
         Course course = courseRepository.findById(id)
@@ -73,6 +80,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Transactional
+    @CacheEvict(value = "courses", allEntries = true)
     @Override
     public void deleteCourse(Long id) {
         Course course = courseRepository.findById(id)
